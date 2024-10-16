@@ -49,8 +49,6 @@ WRAPPER_DIR = "${WORKDIR}/wrappers"
 # Set the Cargo manifest path to the typical location
 CARGO_MANIFEST_PATH ?= "${S}/Cargo.toml"
 
-FILES:${PN}-dev += "${libdir}/*.rlib"
-
 CARGO_BUILD_FLAGS = "\
     --verbose \
     --manifest-path ${CARGO_MANIFEST_PATH} \
@@ -135,7 +133,7 @@ cargo_bin_do_install() {
 
     for tgt in "${CARGO_BINDIR}"/*; do
         case $tgt in
-            *.so|*.rlib)
+            *.so)
                 install -d "${D}${libdir}"
                 install -m755 "$tgt" "${D}${libdir}"
                 files_installed="$files_installed $tgt"
