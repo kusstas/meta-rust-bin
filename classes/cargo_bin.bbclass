@@ -102,7 +102,7 @@ cargo_bin_do_compile() {
     export LD="${WRAPPER_DIR}/linker-wrapper.sh"
     export PKG_CONFIG_ALLOW_CROSS="1"
     export LDFLAGS=""
-    export RUSTFLAGS="${RUSTFLAGS}"
+    export RUSTFLAGS="${RUSTFLAGS} --remap-path-prefix=${WORKDIR}=/"
     export SSH_AUTH_SOCK="${SSH_AUTH_SOCK}"
 
     # This "DO_NOT_USE_THIS" option of cargo is currently the only way to
@@ -115,7 +115,7 @@ cargo_bin_do_compile() {
     export CARGO_TARGET_${@rust_target(d, 'TARGET').replace('-','_').upper()}_LINKER="${WRAPPER_DIR}/linker-wrapper.sh"
     export CARGO_HOST_LINKER="${WRAPPER_DIR}/linker-native-wrapper.sh"
     export CARGO_BUILD_FLAGS="-C rpath"
-    export CARGO_PROFILE_RELEASE_DEBUG="true"
+    export CARGO_PROFILE_RELEASE_DEBUG="false"
     export CARGO_NET_GIT_FETCH_WITH_CLI="true"
 
     # The CC crate defaults to using CFLAGS when compiling everything. We can
